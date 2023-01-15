@@ -7,6 +7,7 @@
     top: 0;
     z-index: 100;
 }
+
 .navbar__right{
     display: flex;
     gap: 2rem;

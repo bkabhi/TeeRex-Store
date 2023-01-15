@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+button {
+  cursor: pointer;
+}
+
+.App {
+  text-align: center;
+  font-family: sans-serif;
+}
+
+@import url('./Navbar.css');
+@import url('./Cart.css');
+@import url('./ProductsListPage.css');
+@import url('./SingleCard.css');

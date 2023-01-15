@@ -1,5 +1,4 @@
 import { GET_PRODUCTS_ERROR, GET_PRODUCTS_PENDING, GET_PRODUCTS_SUCCESS } from "./actionType"
-
 const baseUrl = 'https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/catalogue.json';
 
 export const getProductsPending = ()=>{
@@ -26,7 +25,6 @@ export const getProducts = () => async (dispatch)=>{
     try {
         const res = await fetch(baseUrl);
         const res2 = await res.json();
-        // console.log(res2);
         dispatch(getProductsSuccess(res2));
     } catch (error) {
         console.log(error, " error ");

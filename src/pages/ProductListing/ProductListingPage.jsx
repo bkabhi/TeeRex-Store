@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../../rudux/product/action';
+import ProductCard from './ProductCard';
 
 const colours = ['Red', 'Blue', 'Green'];
 const genders = ['Men', 'Women'];
@@ -10,8 +11,8 @@ const prices = ['0-Rs250', 'Rs251-450', 'Rs 450'];
 const types = ['Polo', 'Hoodie', 'Basic'];
 
 const ProductListingPage = () => {
-    const dispatch = useDispatch()
-    const apiData = useSelector(state => state.Products.products)
+    const dispatch = useDispatch();
+    const { products: apiData, isPending, isError} = useSelector(state => state.Products)
 
     const [products, setProducts] = useState([]);
     const [search, setSearch] = useState("");
@@ -20,7 +21,6 @@ const ProductListingPage = () => {
     const showData = products.length > 0 ? products : apiData
 
     const handleSearch = (inputValue) => {
-        // console.log(inputValue, " inputValue");
         if (inputValue === "") {
             setProducts(apiData);
         } else {
@@ -49,21 +49,33 @@ const ProductListingPage = () => {
         }
     }
 
-    const handleCart = (item) => {
-        let cartData = JSON.parse(localStorage.getItem('cartData')) || [];
-        let flag = -1;
-        cartData.forEach((ele, i) => {
-            if (ele.id === item.id) {
-                flag = i;
-                return;
+    const getFilterProducts = (filter)=>{
+        // console.log(filter);
+        if (filter.length > 0) {
+            // filter color, gender and type 
+            let filteredData = apiData.filter(item =>
+                filter.includes(item.color) ||
+                filter.includes(item.gender) ||
+                filter.includes(item.type)
+            )
+            // filter price range 
+            if(filter.includes(prices[2])||filter.includes(prices[1])||filter.includes(prices[0])){
+                filteredData = apiData.filter(item =>
+                    (filter.includes(prices[2])&&filter.includes(prices[1])&&filter.includes(prices[0])?item
+                        :filter.includes(prices[1])&&filter.includes(prices[0])?item.price<450
+                        :filter.includes(prices[1])&&filter.includes(prices[2])?item.price>250
+                        :filter.includes(prices[0])&&filter.includes(prices[2])?item.price<=250||item.price>=450
+                        :filter.includes(prices[2])?item.price>=450
+                        :filter.includes(prices[1])?item.price>250&&item.price<450
+                        :filter.includes(prices[0])?item.price<=250
+                        :item 
+                    )
+                )
             }
-        })
-        if (flag !== -1) {
-            cartData[flag].quantity = cartData[flag].quantity + 1;
+            setProducts(filteredData)
         } else {
-            cartData.push({ ...item, quantity: 1 });
+            setProducts(apiData)
         }
-        localStorage.setItem("cartData", JSON.stringify(cartData));
     }
 
     useEffect(() => {
@@ -72,16 +84,7 @@ const ProductListingPage = () => {
     }, [])
 
     useEffect(() => {
-        if (filter.length > 0) {
-            const filteredData = apiData.filter(item =>
-                filter.includes(item.color) ||
-                filter.includes(item.gender) ||
-                filter.includes(item.type)
-            )
-            setProducts(filteredData)
-        } else {
-            setProducts(apiData)
-        }
+        getFilterProducts(filter);
         // eslint-disable-next-line
     }, [filter])
 
@@ -95,7 +98,6 @@ const ProductListingPage = () => {
                     <AiOutlineSearch color='white' size={20} />
                 </button>
             </div>
-
             <div className='productPage'>
                 <div className='productPage__filters'>
                     <h3>Colour</h3>
@@ -136,21 +138,13 @@ const ProductListingPage = () => {
                     }
                 </div>
                 <div>
-
                     <div className='productsList'>
                         {
-                            showData &&
+                            isPending?<h1>Loading...</h1>
+                            :isError?<h1>Error...</h1>
+                            :showData &&
                             showData.map((item) => (
-                                <div key={item.id} className='productsList__item'>
-                                    <div className='productsList__item__imgdiv'>
-                                        <img src={item.imageURL} alt={item.name} />
-                                        <h2>{item.name}</h2>
-                                    </div>
-                                    <div className='productsList__item__details'>
-                                        <h2>Rs {item.price}</h2>
-                                        <button onClick={() => handleCart(item)}>Add to cart</button>
-                                    </div>
-                                </div>
+                                <ProductCard key={item.id} item={item}/>
                             ))}
                     </div>
                 </div>

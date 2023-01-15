@@ -1,13 +1,22 @@
 import React from 'react'
-import './Cart.css'
-let cartData = JSON.parse(localStorage.getItem('cartData'))||[];
-const total = cartData.reduce((accumulator, {price,quantity})=>accumulator+(price*quantity), 0);
-
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteCartProducts, updateCartProducts } from '../../rudux/cart/action';
+// import './Cart.css'
 
 const Cart = () => {
+  const dispatch = useDispatch();
+  const { cart: cartData, totalPrice: total } = useSelector(state => state.Cart);
 
   const handleDelete = (id)=>{
-    console.log(id, " delete cart");
+    dispatch(deleteCartProducts(id));
+  }
+
+  const handleUpdate = (item, val)=>{
+    if(item.cartQuantity<item.quantity || val<0){
+      dispatch(updateCartProducts({item, val}));
+    }else{
+      alert("Item quantity is out of stock");
+    }
   }
 
   return (
@@ -18,13 +27,21 @@ const Cart = () => {
           {
             cartData.map(item=>(
               <div className='cart__item' key={item.id}>
-                <img src={item.imageURL} width={100} alt={item.name} />
-                <div>
-                  <h2>{item.name}</h2>
-                  <h2>{item.price}</h2>
+                <div className='cart__item__Details'>
+                  <img src={item.imageURL} width={100} alt={item.name} />
+                  <div>
+                    <h2>{item.name}</h2>
+                    <h2>{item.price*item.cartQuantity}</h2>
+                  </div>
                 </div>
-                <button> Qty: {item.quantity} </button>
-                <button onClick={()=>handleDelete(item.id)}> Delete </button>
+                <div className='cart__item__update'>
+                  <div className='cart__item__quantity'>
+                    <button onClick={()=>handleUpdate(item, -1)} disabled={item.cartQuantity===1}> - </button>
+                    <button> Qty: {item.cartQuantity} </button>
+                    <button onClick={()=>handleUpdate(item, 1)}> + </button>
+                  </div>
+                  <button className='cart__item__deleteBtn' onClick={()=>handleDelete(item.id)}> Delete </button>
+                </div>
               </div>
             ))
           }

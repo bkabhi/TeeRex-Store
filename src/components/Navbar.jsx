@@ -1,12 +1,11 @@
 import React from 'react';
-import './Navbar.css';
 import { NavLink } from 'react-router-dom';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
-
-let cartData = JSON.parse(localStorage.getItem('cartData'))||[];
-let cartDataLength = cartData.reduce((prev, curr)=>prev+curr.quantity,0);
+import { useSelector } from 'react-redux';
 
 const Navbar = () => {
+    const cartDataLength = useSelector(state => state.Cart.totalProducts);
+    
     return (
         <div className='navbar'>
             <div>
