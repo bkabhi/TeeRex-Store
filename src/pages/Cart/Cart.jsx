@@ -1,5 +1,5 @@
 import React from 'react'
-
+import './Cart.css'
 let cartData = JSON.parse(localStorage.getItem('cartData'))||[];
 const total = cartData.reduce((accumulator, {price,quantity})=>accumulator+(price*quantity), 0);
 
@@ -11,14 +11,14 @@ const Cart = () => {
   }
 
   return (
-    <div style={{textAlign:'left', width:'90%', margin:'auto'}}>
+    <div className='cart'>
       <h3>Shopping Cart</h3>
-      <div style={{width:'fit-content', marginTop:'4rem'}}>
-        <div style={{marginLeft:'6rem', fontSize:'12px', borderBottom:'2px solid black'}}>
+      <div className='cart__details'>
+        <div  className='cart__products'>
           {
             cartData.map(item=>(
-              <div key={item.id} style={{display:'flex', alignItems:'center', gap:'4rem', margin:'2rem', marginLeft:'0'}}>
-                <img src={item.imageURL} width={100} background='black' alt={item.name} />
+              <div className='cart__item' key={item.id}>
+                <img src={item.imageURL} width={100} alt={item.name} />
                 <div>
                   <h2>{item.name}</h2>
                   <h2>{item.price}</h2>
@@ -29,8 +29,8 @@ const Cart = () => {
             ))
           }
         </div>
-        <div style={{ display:'flex', alignItems:'center', justifyContent:'center', gap:'2rem', marginTop:'1rem'}}>
-            <h2 style={{fontSize:'1.3rem'}}> Total amount </h2>
+        <div className='cart__details__total'>
+            <h2 className='cart__total'> Total amount </h2>
             <span> Rs. {total} </span>
         </div>
       </div>

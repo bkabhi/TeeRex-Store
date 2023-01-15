@@ -21,7 +21,7 @@ const Navbar = () => {
                 <NavLink to='/cart' >
                     <div className='navbar__right__cartIcon'>
                         <AiOutlineShoppingCart size={40}/>
-                        {cartDataLength>0?<span>{cartDataLength}</span>:""}
+                        {cartDataLength>0?<span className='navbar__noOfCartItem'>{cartDataLength}</span>:""}
                     </div>
                 </NavLink>
             </div>

@@ -1,0 +1,36 @@
+.cart {
+    text-align: left;
+    width: 90%;
+    margin: auto;
+}
+
+.cart__details {
+    width: fit-content;
+    margin-top: 4rem;
+}
+
+.cart__products {
+    margin-left: 6rem;
+    font-size: 12px;
+    border-bottom: 2px solid black;
+}
+
+.cart__item {
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    margin: 2rem;
+    margin-left: 0;
+}
+
+.cart__details__total {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.cart__total {
+    font-size: 1.3rem;
+}
