@@ -1,0 +1,19 @@
+.navbar{
+    background-color: #f1efef;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 4rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.navbar__right{
+    display: flex;
+    gap: 2rem;
+}
+
+.navbar__right__cartIcon{
+    background-color: #d3d3d4;
+    padding: 0.5rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
