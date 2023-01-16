@@ -1,7 +1,6 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteCartProducts, updateCartProducts } from '../../rudux/cart/action';
-// import './Cart.css'
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -11,12 +10,8 @@ const Cart = () => {
     dispatch(deleteCartProducts(id));
   }
 
-  const handleUpdate = (item, val)=>{
-    if(item.cartQuantity<item.quantity || val<0){
-      dispatch(updateCartProducts({item, val}));
-    }else{
-      alert("Item quantity is out of stock");
-    }
+  const handleUpdate = (id, val)=>{
+    dispatch(updateCartProducts({id, val}));
   }
 
   return (
@@ -36,9 +31,9 @@ const Cart = () => {
                 </div>
                 <div className='cart__item__update'>
                   <div className='cart__item__quantity'>
-                    <button onClick={()=>handleUpdate(item, -1)} disabled={item.cartQuantity===1}> - </button>
+                    <button onClick={()=>handleUpdate(item.id, -1)} disabled={item.cartQuantity<=1}> - </button>
                     <button> Qty: {item.cartQuantity} </button>
-                    <button onClick={()=>handleUpdate(item, 1)}> + </button>
+                    <button onClick={()=>handleUpdate(item.id, 1)} disabled={item.cartQuantity>=item.quantity}> + </button>
                   </div>
                   <button className='cart__item__deleteBtn' onClick={()=>handleDelete(item.id)}> Delete </button>
                 </div>

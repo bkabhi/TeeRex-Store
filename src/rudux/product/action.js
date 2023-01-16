@@ -1,20 +1,20 @@
 import { GET_PRODUCTS_ERROR, GET_PRODUCTS_PENDING, GET_PRODUCTS_SUCCESS } from "./actionType"
 const baseUrl = 'https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/catalogue.json';
 
-export const getProductsPending = ()=>{
+const getProductsPending = ()=>{
     return {
         type: GET_PRODUCTS_PENDING
     }
 }
 
-export const getProductsSuccess = (payload)=>{
+const getProductsSuccess = (payload)=>{
     return {
         type: GET_PRODUCTS_SUCCESS,
         payload
     }
 }
 
-export const getProductsError = ()=>{
+const getProductsError = ()=>{
     return {
         type: GET_PRODUCTS_ERROR
     }

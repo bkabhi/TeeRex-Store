@@ -4,15 +4,16 @@ import { addCartProducts } from '../../rudux/cart/action';
 
 const ProductCard = ({item}) => {
     const dispatch = useDispatch()
-    const { cart: cartData } = useSelector(state => state.Cart);
+    // const { cart: cartData } = useSelector(state => state.Cart);
 
     const handleCart = (item) => {
-        let flag = cartData.findIndex(ele=>ele.id===item.id);
-        if (flag !== -1) {
-            alert("This Product is already in the cart")
-        }else{
-            dispatch(addCartProducts({ ...item, cartQuantity: 1 }))
-        }
+        // let flag = cartData.findIndex(ele=>ele.id===item.id);
+        // if (flag !== -1) {
+        //     alert("This Product is already in the cart");
+        // }else{
+        //     dispatch(addCartProducts({ ...item, cartQuantity: 1 }))
+        // }
+        dispatch(addCartProducts({ ...item, cartQuantity: 1 }))
     }
     
     return (

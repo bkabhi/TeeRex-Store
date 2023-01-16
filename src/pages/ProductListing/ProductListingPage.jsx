@@ -3,33 +3,30 @@ import { useEffect } from 'react'
 import { AiOutlineSearch } from 'react-icons/ai'
 import { useDispatch, useSelector } from 'react-redux';
 import { getProducts } from '../../rudux/product/action';
+import { getFilterProducts, colours, genders, prices, types } from '../../utils/FilteredProducts';
 import ProductCard from './ProductCard';
 
-const colours = ['Red', 'Blue', 'Green'];
-const genders = ['Men', 'Women'];
-const prices = ['0-Rs250', 'Rs251-450', 'Rs 450'];
-const types = ['Polo', 'Hoodie', 'Basic'];
 
 const ProductListingPage = () => {
     const dispatch = useDispatch();
-    const { products: apiData, isPending, isError} = useSelector(state => state.Products)
+    const { products, isPending, isError} = useSelector(state => state.Products)
 
-    const [products, setProducts] = useState([]);
+    const [updatedProducts, setUpdatedProducts] = useState([]);
     const [search, setSearch] = useState("");
     const [filter, setFilter] = useState([]);
 
-    const showData = products.length > 0 ? products : apiData
+    const showData = updatedProducts.length > 0 ? updatedProducts : products
 
     const handleSearch = (inputValue) => {
         if (inputValue === "") {
-            setProducts(apiData);
+            setUpdatedProducts(products);
         } else {
-            const searchedProducts = apiData.filter((item) =>
+            const searchedProducts = products.filter((item) =>
                 item.name.toLowerCase().includes(inputValue.toLowerCase()) ||
                 item.color.toLowerCase().includes(inputValue.toLowerCase()) ||
                 item.type.toLowerCase().includes(inputValue.toLowerCase())
             );
-            setProducts(searchedProducts);
+            setUpdatedProducts(searchedProducts);
         }
     }
 
@@ -49,43 +46,12 @@ const ProductListingPage = () => {
         }
     }
 
-    const getFilterProducts = (filter)=>{
-        // console.log(filter);
-        if (filter.length > 0) {
-            // filter color, gender and type 
-            let filteredData = apiData.filter(item =>
-                filter.includes(item.color) ||
-                filter.includes(item.gender) ||
-                filter.includes(item.type)
-            )
-            // filter price range 
-            if(filter.includes(prices[2])||filter.includes(prices[1])||filter.includes(prices[0])){
-                filteredData = apiData.filter(item =>
-                    (filter.includes(prices[2])&&filter.includes(prices[1])&&filter.includes(prices[0])?item
-                        :filter.includes(prices[1])&&filter.includes(prices[0])?item.price<450
-                        :filter.includes(prices[1])&&filter.includes(prices[2])?item.price>250
-                        :filter.includes(prices[0])&&filter.includes(prices[2])?item.price<=250||item.price>=450
-                        :filter.includes(prices[2])?item.price>=450
-                        :filter.includes(prices[1])?item.price>250&&item.price<450
-                        :filter.includes(prices[0])?item.price<=250
-                        :item 
-                    )
-                )
-            }
-            setProducts(filteredData)
-        } else {
-            setProducts(apiData)
-        }
-    }
-
     useEffect(() => {
         dispatch(getProducts());
-        // eslint-disable-next-line
     }, [])
 
     useEffect(() => {
-        getFilterProducts(filter);
-        // eslint-disable-next-line
+        setUpdatedProducts(getFilterProducts(filter, products));
     }, [filter])
 
     return (
