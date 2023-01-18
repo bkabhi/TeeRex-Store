@@ -4,11 +4,26 @@
     margin: auto;
 }
 
+/* empty cart */
+.cart__empty{
+    text-align: center;
+}
+.cart__empty button{
+    font-size: large;
+    font-weight: 800;
+    padding: 0.5rem 1rem;
+}
+
+
+
+/* cart div */
 .cart__details {
     width: fit-content;
     margin-top: 4rem;
 }
 
+
+/* cart All products div */
 .cart__products {
     margin-left: 5rem;
     font-size: 12px;

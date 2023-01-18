@@ -1,6 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteCartProducts, updateCartProducts } from '../../rudux/cart/action';
+import { Link } from 'react-router-dom';
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -17,6 +18,15 @@ const Cart = () => {
   return (
     <div className='cart'>
       <h3>Shopping Cart</h3>
+        {
+          cartData.length===0?
+              <div className='cart__empty'>
+                <h1>Cart is Empty</h1>
+                <Link to={'/'}>
+                  <button>Add Products in Cart</button>
+                </Link>
+              </div> 
+          :
       <div className='cart__details'>
         <div  className='cart__products'>
           {
@@ -46,6 +56,7 @@ const Cart = () => {
             <span> Rs. {total} </span>
         </div>
       </div>
+        }
     </div>
   )
 }
