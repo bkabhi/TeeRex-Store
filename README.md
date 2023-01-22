@@ -1,6 +1,8 @@
 # TeeRex-Store
 
-A simple e commerece project challenge.
+A simple e-commerece project challenge.
+
+<!-- This web application contains two major part of any e-commerce website which is Product page and Cart page.I have implemented some basic functionalities like user can filter and search products by typing brand name or product color like Green Polo from the product page and also user can add item in the cart and delete items from the cart. -->
 
 ## Functionalities
 
