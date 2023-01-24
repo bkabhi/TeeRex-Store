@@ -48,12 +48,17 @@ Solo project
 - Vs Code
 - Git
 
-## Installation
+## How to run locally ?
 
-Clone the project and run command npm start to launch the project in local machine
-
-## Run Project :
-
-In the project directory, you can run:
-
-### `npm start`
+1.  clone
+    ```
+     git clone https://github.com/bkabhi/TeeRex-Store.git
+    ```
+2.  Install node_modules
+    ```
+     npm i
+    ```
+3.  start it
+    ```
+    npm run start
+    ```
