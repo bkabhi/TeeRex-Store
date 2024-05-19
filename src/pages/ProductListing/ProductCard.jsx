@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addCartProducts } from '../../rudux/cart/action';
 
 const ProductCard = ({item}) => {
